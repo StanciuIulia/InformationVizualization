@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VI Project Stanciu Bistreanu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            background: white;
+        }
+
+        .description{
+            margin:2px;
+            border:2px;
+        }
+
+        /* Style the top navigation bar */
+        .topnav {
+            overflow: hidden;
+            background-color: white;
+        }
+
+        /* Style the topnav links */
+        .topnav input {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 10px 10.5px;
+            text-decoration: none;
+        }
+
+        /* Create two unequal columns that floats next to each other */
+        .row{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+        }
+        /* Left graph */
+        .leftcolumn {
+            flex: 65%;
+        }
+
+        /* Right graph */
+        .rightcolumn {
+            flex: 35%;
+            padding-left: 10px;
+        }
+  
+        /* Visualization */
+        .visualization {
+            width: 100%;
+            height: 650px;
+            max-height: 80vh;
+        }
+
+        iframe {
+            margin:auto;
+            display:block;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+    </style>
+</head>
+
+<body onload="toggle_visibility('left'); toggle_visibility_2('map');">
+
+    <div class="header">
+        <h3>Information Visualization - Second Practical Work</h1>
+        <h5>Analysis of UPC Departments' Production</h3>
+    </div>
+
+    <div class="topnav">
+
+        <input type="button" onclick="toggle_visibility_2('map');" value="See Map"></input>
+        <a href="https://futur.upc.edu/" target=”_blank><input type="button" value="Visit the University Website"></input></a>
+        <input type="button" onclick="toggle_visibility_2('text');" value="Project Information"></input>
+        <input type="button" onclick="toggle_visibility('left');" style="float:right" value="Compare department productivty"></input>  
+        <input type="button" onclick="toggle_visibility('right');" style="float:right" value="See department size vs number of publications" ></input>
+
+        
+        <script>
+            top.visible_div_id = 'right';
+            function toggle_visibility(id) {
+                var old_e = document.getElementById(top.visible_div_id);
+                var new_e = document.getElementById(id);
+                if (old_e) {
+                    console.log('old', old_e, 'none');
+                    old_e.style.display = 'none';
+                }
+                console.log('new', new_e, 'block');
+                new_e.style.display = 'block';
+                top.visible_div_id = id;
+            }
+        </script>
+        <script>
+            top.visible_div_id2 = 'text';
+            function toggle_visibility_2(id) {
+                var old_e = document.getElementById(top.visible_div_id2);
+                var new_e = document.getElementById(id);
+                if (old_e) {
+                    console.log('old', old_e, 'none');
+                    old_e.style.display = 'none';
+                }
+                console.log('new', new_e, 'block');
+                new_e.style.display = 'block';
+                top.visible_div_id2 = id;
+            }
+        </script>
+
+    </div>
+
+    <div class="row" >
+        <div class="leftcolumn">
+            <div id="map">
+                <iframe id="iframe1" class="visualization" src="catalunya_map.html" style="width:100%;"
+                    title="Iframe Example"></iframe>
+            </div>
+            <div id="text" class="description" style="width:100%; overflow-y: auto; max-height: 80vh; height:650px">
+                <h4>Project Information</h4>
+                <h4>Students: Iulia Stanciu and Maria Bistreanu</h4>
+                <p>For this project, a dataset containing information about departaments of UPC, research groups in UPC and publications is used. 
+                    The dataset can be downloaded from this <a href="https://mydisk.cs.upc.edu/s/9LoxgrLtPK4GmTz" target=”_blank>link</a>.</p>
+                <p>The data provided by the dataset was augmented using <a href="https://futur.upc.edu/" target=”_blank>futur.upc.edu</a>, and the 
+                    websites of the departments.</p>
+                <p>For the purpose of this practical work, 10 departaments in UPC were chosen to be repesented and anlysed. 
+                    The departaments were carefully chosen to show the vast geografical area containing universities in UPC, 
+                    as well as a variety of subjects. Using the information from the first practical work and the data found 
+                    on <a href="https://futur.upc.edu/" target=”_blank>futur.upc.edu</a>, the departaments were selected to display 
+                    the varience in the number of people involved in research in each departament and how this factor affects the 
+                    productivity of the departament. </p>
+                <p>An interactive vizualization with multiple views will be provided below. This includes the following:</p>
+                <p>1.   An interactive map of Catalonia where each point represents 
+                    the department’s address.</p>
+                <p>2.   A "hover" element on the map which helps the user to see the important information about each department by clicking the mouse on top of the department location point(the red pin points). The displayed information represents: the full name of the department, the abreviation, number of members by category, total number of publications, average publications per year, as well as a link to the specific department's website. The link can be opened in another tab by the following command:  right click + open in a new tab. 
+                    (Clicking makes the details fix until a new clicking is made. If the user clicked on another pinpoint, the details of that specific department will appear instead.)</p>
+                <p>3.   Through the previously mentioned map, an interactive visualization for the stats of a department can be selected. By clicking on one of the blue circles present for each point, a chart depicting the number of articles written by each author in each year (for the selected department) will be shown. For this representation, a boxplot with points repesenting the authors was chosen. By hoovering over a point the following details will appear: department, year, ID of the author in the database (we were not sure if it will be alright to put the name) and the number of articles published for that department, in that year.</p>
+                <p>4.   Separate from the map, two buttons are provided for the user to be able to choose between two visualizations.</p>
+                <p>5.   The first (default) one offers a comparison between two or more departments by using the ten available colourful buttons (each one corresponds to one department). A row of dreptunghiular buttons is provided in order for the user to be able to select one, two or more departaments to compare. The buttons represent a chart. the color coding is presented above with the department abreviation. By placing the cursor on top of one of the buttons, the full name of the departament will appear. The selection for one departmemt can be done by simlply clicking, while adding more can be done by pressing Shift+Click. Once the selection is made, the number of publications along time of the two departments can be compared in the two charts. The first chart shows the number of publications per year in each department as a stacked bar chart. That makes it easy to compare lengths. To ease the process, a hoover was added; when placed on top of a part of the chart, it shows the department and the number of articles published in that year. 
+                    The second chart provided in this part of the multiple view vizualization is a line chart which helps comparing the evolution in the number of articles published from 2010 to 2022. The same buttons action the view of this visualization. The trend is (as expected) a rising one, with little to no stagnant years for each departament. For the ones interested in the actual number of articles published from 2010 to another year, placing the cursor on top of the square points on the line graph shows the departament and the number of articles published until that year (starting from 2010). The initial setting for the puttons is "all selected", therefore, a reference on the total publications per year is provided this way. (As an idea, another reference to the average publications number of the whole group can be provided).
+                    Some other important aspects are highlighted in the graphic. </p>
+                <p>6.   Through the other button, another visualization is presented. This one provides a thorough insight over the departments sizes with respect to the number of publications and total number of members.
+                    </p>
+                <p>To create the visualization two .csv databases were used.</p>
+                <p>One was created by hand and it includes data on the 10 departments: acronym, adress, website, number of actual members.</p> 
+                <p>The second one was obtained by refining and augmenting the database provided in the lab instructions.</p>
+                <p><b>The steps of the data refinement and augmentation were the following:</b></p>   
+                <p>1.   Using a facet, the people who were not part of a departament were removed from the database. Institutes or centers clasified as departments were also removed, leaving us with 30 departments after this first step. </p>
+                <p>2.   The date of publication was reduced to year by am expression change to simplify the repesentations. </p>
+                <p>3.    To ensure the consistency of the data, the format of the ISSN was checked. Some discrepencies from the normal format were found and were treated in various ways: if only the dash character was missing, it was added in its place, if the ISSN was includent, but we were able to find the publication and its ISSN online, the number was changed to the correct one. In some special cases, the whole entry was deleted. </p>
+                <p>4.   The consistency between authors and author ID was checked.</p>
+                <p>5.   The 10 departments needed for this project were chosen considering geographical position, subject diversity, size and number of articles published.</p>
+                <p>6.   The departments' names were translated to english as they can be found on the UPC website.</p>
+            </div>
+        </div>
+
+        <div class="rightcolumn" >
+            <div id="left" >
+                <iframe id="iframe2" class="visualization" src="chart.html" style="width:100%"
+                    title="Iframe Example"></iframe>
+            </div>
+            <div id="right" >
+                <iframe id="iframe3" class="visualization" src="chart_2.html" style="width:100%"
+                    title="Iframe Example"></iframe>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
